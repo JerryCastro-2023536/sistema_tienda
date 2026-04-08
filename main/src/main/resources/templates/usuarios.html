@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Usuarios</title>
+    <link rel='stylesheet' href='principal.css'>
+    <link rel='stylesheet' href='crud.css'>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <img src="Logo.png" alt="logo">
+            <ul>
+                <a href="principal"><li>Inicio</li></a>
+                <a href="#"><li>Productos</li></a>
+                <a href="#"><li>Contacto</li></a>
+                <a href="#"><li>Comprar</li></a>
+                <a href="sistema"><li>Administrar</li></a>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="contenedor-productos">
+
+        <h2>Registro de Usuarios</h2>
+        <div class="formulario">
+            <input type="text" id="codigoUsuario" placeholder="Código Usuario">
+            <input type="text" id="username" placeholder="Nombre de Usuario">
+            <input type="text" id="email" placeholder="Email">
+            <input type="text" id="password" placeholder="Contraseña">
+
+            <select id="estado">
+                <option value="">Estado</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+
+            <div class="botones">
+                <button>Agregar</button>
+                <button>Buscar</button>
+                <button>Eliminar</button>
+                <button>Limpiar</button>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Código Usuario</th>
+                    <th>Nombre de Usuario</th>
+                    <th>Email</th>
+                    <th>Contraseña</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="tablaUsuarios"></tbody>
+        </table>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Supermarker</p>
+    </footer>
+
+</body>
+</html>
