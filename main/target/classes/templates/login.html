@@ -16,9 +16,10 @@
             <img src="Logo.png" alt="logo tienda">
             <h2>Bienvenido</h2>
             <form class="form-login" th:action="@{/login}" method="post">
-                <input type="text" name="username" placeholder="username" required>
-                <input type="password" name="password" placeholder="password" required>
+                <input type="text" name="username" onInput="limpiarError()" placeholder="username" required>
+                <input type="password" name="password" onInput="limpiarError()" placeholder="password" required>
                 <button type="submit"><i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión</button>
+                <p id="msg" th:if="${loginError}" th:text="${loginError}" style="color: red;"></p>
             </form>
         </div>
     </div>
