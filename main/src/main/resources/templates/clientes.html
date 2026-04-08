@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>Clientes</title>
+    <link rel='stylesheet' href='principal.css'>
+    <link rel='stylesheet' href='crud.css'>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <img src="Logo.png" alt="logo">
+            <ul>
+                <a href="principal"><li>Inicio</li></a>
+                <a href="clientes"><li>Clientes</li></a>
+                <a href="#"><li>Contacto</li></a>
+                <a href="#"><li>Comprar</li></a>
+                <a href="sistema"><li>Administrar</li></a>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="contenedor-productos">
+
+        <h2>Registro de Clientes</h2>
+        <div class="formulario">
+            <input type="text" id="dpiCliente" placeholder="DPI">
+            <input type="text" id="nombre" placeholder="Nombre">
+            <input type="text" id="apellido" placeholder="Apellido">
+            <input type="text" id="direccion" placeholder="Dirección">
+            
+            <select id="estado">
+                <option value="">Estado</option>
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+
+            <div class="botones">
+                <button>Agregar</button>
+                <button>Buscar</button>
+                <button>Eliminar</button>
+                <button>Limpiar</button>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>DPI</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Dirección</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="tablaClientes"></tbody>
+        </table>
+
+    </div>
+
+    <footer>
+        <p>© 2026 Supermarker</p>
+    </footer>
+
+</body>
+</html>
