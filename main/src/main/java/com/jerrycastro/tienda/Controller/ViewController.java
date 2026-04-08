@@ -34,4 +34,9 @@ public class ViewController {
     public String mostrarVentas(){
         return "ventas";
     }
+
+    @GetMapping("/contacto")
+    public String mostrarContacto(){
+        return "contactanos";
+    }
 }
