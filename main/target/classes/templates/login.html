@@ -10,16 +10,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='login.css'>
 </head>
-<body>
+<body>0
     <div class="contenedor">
         <div class="contenedor-login">
             <img src="Logo.png" alt="logo tienda">
             <h2>Bienvenido</h2>
             <form class="form-login" th:action="@{/login}" method="post">
-                <input type="text" name="username" onInput="limpiarError()" placeholder="username" required>
-                <input type="password" name="password" onInput="limpiarError()" placeholder="password" required>
+                <input type="text" name="username" placeholder="username" required>
+                <input type="password" name="password" placeholder="password" required>
                 <button type="submit"><i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión</button>
-                <p id="msg" th:if="${loginError}" th:text="${loginError}" style="color: red;"></p>
+                <p>No tienes cuenta? <a href='register'>registrate aquí</a></p>
+
             </form>
         </div>
     </div>
