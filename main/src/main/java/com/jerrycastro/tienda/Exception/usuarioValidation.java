@@ -15,13 +15,14 @@ public class usuarioValidation {
         this.usuariosRepository = usuariosRepository;
     }
 
-    public void validarUsername(String username){
+    public Usuarios validarUsername(String username){
         List<Usuarios> usuariosList = usuariosRepository.findAll();
         for(Usuarios u : usuariosList){
             if(username.equals(u.getUsername())){
                 throw new PersonaliteException("El nombre de usuario ya existe");
             }
         }
+        return null;
     }
 
     public void validarEstado(Integer estado){
