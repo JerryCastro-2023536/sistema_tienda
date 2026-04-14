@@ -42,6 +42,11 @@ td {
     border-bottom: 1px solid #ccc;
 }
 
-button.eliminar {
-    background-color: red;
+.btn-delete {
+    background-color: #dd2505;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
 }
