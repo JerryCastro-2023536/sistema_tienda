@@ -4,6 +4,7 @@ import com.jerrycastro.tienda.Entity.Usuarios;
 import com.jerrycastro.tienda.Exception.NotFoundException;
 import com.jerrycastro.tienda.Exception.usuarioValidation;
 import com.jerrycastro.tienda.Repository.UsuariosRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,7 +12,9 @@ import java.util.List;
 @Service
 public class UsuariosServiceImplements implements UsuariosService{
 
+    @Autowired
     private final UsuariosRepository usuariosRepository;
+
     private final usuarioValidation usuarioValidation;
 
     public UsuariosServiceImplements(UsuariosRepository usuariosRepository, usuarioValidation validarDpi) {
@@ -39,6 +42,33 @@ public class UsuariosServiceImplements implements UsuariosService{
         usuarioValidation.validarRol(usuarios.getRol());
 
         return usuariosRepository.save(usuarios);
+    }
+
+    @Override
+    public Usuarios login(String username, String password) {
+        Usuarios u = usuariosRepository.findByUsername(username);
+
+        if (u != null && u.getPassword().equals(password)) {
+            return u;
+        }
+
+        return null;
+    }
+
+    @Override
+    public Usuarios registrar(String usuario, String password) {
+        if (usuariosRepository.findByUsername(usuario) != null) {
+            return null;
+        }
+
+        Usuarios u = new Usuarios();
+        u.setUsername(usuario);
+        u.setPassword(password);
+        u.setEmail(usuario + "@gmail.com");
+        u.setRol("USER");
+        u.setEstado(1);
+
+        return usuariosRepository.save(u);
     }
 
     @Override
