@@ -70,3 +70,58 @@ body{
 .form-login button:hover{
     background-color: #649213;
 }
+
+.contenedor-register{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 15px;
+    height: 500px;
+    width: 350px;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+.contenedor-register h2{
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+
+.form-register{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    width: 100%;
+}
+
+.form-register input{
+    width: 90%;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background-color: #b6b6b6;
+    padding-left: 10px;
+    font-size: 15px;
+}
+
+
+.form-register button{
+    width: 90%;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #7CB518;
+    border: none;
+    font-size: 16px;
+    color: black;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.form-register button:hover{
+    background-color: #649213;
+}
