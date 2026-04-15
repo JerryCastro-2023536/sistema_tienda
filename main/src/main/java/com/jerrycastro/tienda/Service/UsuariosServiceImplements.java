@@ -6,7 +6,9 @@ import com.jerrycastro.tienda.Exception.usuarioValidation;
 import com.jerrycastro.tienda.Repository.UsuariosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -56,7 +58,7 @@ public class UsuariosServiceImplements implements UsuariosService{
     }
 
     @Override
-    public Usuarios registrar(String usuario, String password) {
+    public Usuarios registrar(String usuario, String password, String email, MultipartFile foto) throws IOException {
         if (usuariosRepository.findByUsername(usuario) != null) {
             return null;
         }
@@ -64,7 +66,8 @@ public class UsuariosServiceImplements implements UsuariosService{
         Usuarios u = new Usuarios();
         u.setUsername(usuario);
         u.setPassword(password);
-        u.setEmail(usuario + "@gmail.com");
+        u.setEmail(email);
+        u.setFoto(foto.getBytes());
         u.setRol("USER");
         u.setEstado(1);
 
