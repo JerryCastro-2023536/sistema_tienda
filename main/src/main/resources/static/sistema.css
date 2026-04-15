@@ -1,3 +1,17 @@
+.perfil{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+
+.perfil img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
 .contenedor-home{
     text-align: center;
