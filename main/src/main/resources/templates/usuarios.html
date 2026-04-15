@@ -54,8 +54,8 @@
                     <th>Código Usuario</th>
                     <th>Nombre de Usuario</th>
                     <th>Email</th>
-                    <th>Contraseña</th>
                     <th>Estado</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody id="tablaUsuarios">
@@ -63,8 +63,14 @@
                     <td th:text="${ u.codigo_usuario }"></td>
                     <td th:text="${ u.username }"></td>
                     <td th:text="${ u.email }"></td>
-                    <td th:text="${ u.password }">
                     <td th:text="${ u.estado }"></td>
+                    <td>
+                        <a th:href="@{'/eliminar/' + ${u.codigo_usuario}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+                            <button class="btn-delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>
