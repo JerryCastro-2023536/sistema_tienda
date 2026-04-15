@@ -90,7 +90,7 @@ public class LoginController {
     }
 
     @GetMapping("/eliminar/{id}")
-    public String eliminarUsuario(@PathVariable int id) {
+    public String eliminarUsuario(@PathVariable("id") int id) {
         usuariosService.deleteUsuarios(id);
         return "redirect:/usuarios";
     }
