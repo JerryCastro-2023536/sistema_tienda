@@ -25,6 +25,27 @@
     cursor: pointer;
 }
 
+.search {
+    margin-bottom: 30px;
+}
+
+.search input{
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn-search {
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    background-color: #FB6107;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
 table {
     width: 90%;
     margin: auto;
@@ -42,6 +63,15 @@ td {
     border-bottom: 1px solid #ccc;
 }
 
+a {                
+  text-decoration: none; 
+  color: inherit;      
+}                
+
+a:hover {                
+  text-decoration: none;
+}
+
 .btn-delete {
     background-color: #dd2505;
     color: white;
@@ -49,4 +79,42 @@ td {
     padding: 5px 10px;
     border-radius: 8px;
     cursor: pointer;
+}
+
+.btn-edit{
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-limpiar {
+    margin: 5px;
+    padding: 10px;
+    border: none;
+    background-color: #FB6107;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    margin: 10% auto;
+    width: 300px;
+    border-radius: 10px;
 }
