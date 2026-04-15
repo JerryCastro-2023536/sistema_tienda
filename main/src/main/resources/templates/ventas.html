@@ -58,6 +58,7 @@
                     <th>Estado</th>
                     <th>DPI Cliente</th>
                     <th>Código Usuario</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody id="tablaVentas"></tbody>
@@ -68,7 +69,13 @@
                     <td th:text="${v.estado}"></td>
                     <td th:text="${v.clientes_dpi_cliente}"></td>
                     <td th:text="${v.usuarios_codigo_usuario}"></td>
-                    
+                    <td>
+                        <a th:href="@{'/eliminarVenta/' + ${v.codigo_venta}}" onclick="return confirm('¿Estás seguro de que deseas eliminar esta venta?');">
+                            <button class="btn-delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </a>
+                    </td>
                 </tr>
         </table>
 
