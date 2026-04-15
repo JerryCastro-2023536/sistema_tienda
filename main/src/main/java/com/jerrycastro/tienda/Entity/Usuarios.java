@@ -24,6 +24,10 @@ public class Usuarios {
     @Column(name = "email")
     private String email;
 
+    @Lob
+    @Column(name = "foto", columnDefinition = "MEDIUMBLOB")
+    private byte[] foto;
+
     @NotBlank(message = "El campo no debe ir vacio")
     @Column(name = "rol")
     private String rol;
@@ -62,6 +66,14 @@ public class Usuarios {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
 
     public String getRol() {
