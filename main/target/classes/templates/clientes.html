@@ -28,25 +28,30 @@
     <div class="contenedor-productos">
 
         <h2>Registro de Clientes</h2>
-        <div class="formulario">
-            <input type="text" id="dpiCliente" placeholder="DPI">
-            <input type="text" id="nombre" placeholder="Nombre">
-            <input type="text" id="apellido" placeholder="Apellido">
-            <input type="text" id="direccion" placeholder="Dirección">
+        <form class="formulario" th:action="@{/saveCliente}" method="post">
+            <input type="text" id="dpi" name="dpi" placeholder="DPI" required>
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+            <input type="text" id="apellido" name="apellido" placeholder="Apellido" required>
+            <input type="text" id="direccion" name="direccion" placeholder="Dirección" required>
             
-            <select id="estado">
-                <option value="">Estado</option>
+            <select id="estado" name="estado" required>
                 <option value="Activo">Activo</option>
                 <option value="Inactivo">Inactivo</option>
             </select>
 
             <div class="botones">
-                <button>Agregar</button>
-                <button>Buscar</button>
-                <button>Eliminar</button>
-                <button>Limpiar</button>
+                <button type="submit">Agregar</button>
             </div>
-        </div>
+        </form>
+
+        <form class="search" th:action="@{/buscarCliente}" method="post">
+            <input type="number" id="id" name="id" placeholder="Buscar por código" required>
+            <button type="submit" class="btn-search" id="btn-buscar">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+
+        <button class="btn-limpiar" onclick="limpiarCampos()">Limpiar </button>
 
         <table>
             <thead>
@@ -72,11 +77,61 @@
                             <i class="bi bi-trash"></i>
                         </button>
                     </a>
+                    <button class="btn-edit"
+                            th:data-dpi="${c.dpi_cliente}"
+                            th:data-nombre="${c.nombre_cliente}"
+                            th:data-apellido="${c.apellido_cliente}"
+                            th:data-direccion="${c.direccion}"
+                            th:data-estado="${c.estado}"
+                            onclick="abrirModalDesdeBoton(this)">
+                        <i class="bi bi-pencil"></i>
+                    </button>
                 </td>
             </tr>
         </table>
+        <div id="modalEditar" class="modal">
+            <div class="modal-content">
+                <h3>Editar Producto</h3>
 
+                <form th:action="@{/updateCliente}" method="post">
+                    <input type="hidden" id="editDpi" name="dpi">
+                    <input type="text" id="editNombre" name="nombre">
+                    <input type="text" id="editApellido" name="apellido">
+                    <input type="text" id="editDireccion" name="direccion">
+
+                    <select id="editEstado" name="estado">
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
+
+                    <button type="submit">Guardar</button>
+                    <button type="button" onclick="cerrarModal()">Cancelar</button>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function cerrarModal() {
+            document.getElementById("modalEditar").style.display = "none";
+        }
+
+        function abrirModalDesdeBoton(btn) {
+            const dpi = btn.getAttribute("data-dpi");
+            const nombre = btn.getAttribute("data-nombre");
+            const apellido = btn.getAttribute("data-apellido");
+            const direccion = btn.getAttribute("data-direccion");
+            const estado = btn.getAttribute("data-estado");
+
+            document.getElementById("modalEditar").style.display = "block";
+
+            document.getElementById("editDpi").value = dpi;
+            document.getElementById("editNombre").value = nombre;
+            document.getElementById("editApellido").value = apellido;
+            document.getElementById("editDireccion").value = direccion;
+            document.getElementById("editEstado").value = (estado == 1) ? "Activo" : "Inactivo";
+        }
+    </script>
 
     <footer>
         <p>© 2026 Supermarker</p>

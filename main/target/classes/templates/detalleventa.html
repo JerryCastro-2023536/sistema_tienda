@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='en' xmlns:th="htttp://thymeleaf.org">
+<html lang='en' xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -7,79 +7,139 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='principal.css'>
     <link rel='stylesheet' href='crud.css'>
 </head>
+
 <body>
-    <header>
-        <nav class="navbar">
-            <img src="Logo.png" alt="logo">
-            <ul>
-                <a href="principal"><li>Inicio</li></a>
-                <a href="#"><li>Productos</li></a>
-                <a href="#"><li>Contacto</li></a>
-                <a href="#"><li>Comprar</li></a>
-                <a href="sistema"><li>Administrar</li></a>
-            </ul>
-        </nav>
-    </header>
 
-    <div class="contenedor-productos">
+<header>
+    <nav class="navbar">
+        <img src="Logo.png" alt="logo">
+        <ul>
+            <a href="principal"><li>Inicio</li></a>
+            <a href="detalleventa"><li>Detalle Venta</li></a>
+            <a href="#"><li>Contacto</li></a>
+            <a href="sistema"><li>Administrar</li></a>
+        </ul>
+    </nav>
+</header>
 
-        <h2>Registro de Detalles de Venta</h2>
-        <div class="formulario">
-            <input type="text" id="codigoDetalle" placeholder="Código Detalle">
-            <input type="text" id="cantidad" placeholder="Cantidad">
-            <input type="text" id="precio" placeholder="Precio">
-            <input type="text" id="subtotal" placeholder="Subtotal">
-            <input type="text" id="codigoProducto" placeholder="Código Producto">
-            <input type="text" id="codigoVenta" placeholder="Código Venta">
-            
+<div class="contenedor-productos">
 
-            <div class="botones">
-                <button>Agregar</button>
-                <button>Buscar</button>
-                <button>Eliminar</button>
-                <button>Limpiar</button>
-            </div>
+    <h2>Registro de Detalles de Venta</h2>
+
+    <form class="formulario" th:action="@{/saveDetalle}" method="post">
+
+        <input type="text" name="codigo" placeholder="Código Detalle" required>
+        <input type="text" name="cantidad" placeholder="Cantidad" required>
+        <input type="text" name="precio" placeholder="Precio Unitario" required>
+        <input type="text" name="subtotal" placeholder="Subtotal" required>
+
+        <input type="text" name="productosCod" placeholder="Código Producto" required>
+        <input type="text" name="ventasCod" placeholder="Código Venta" required>
+
+        <div class="botones">
+            <button type="submit">Agregar</button>
         </div>
+    </form>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Código Detalle</th>
-                    <th>Cantidad</th>
-                    <th>Precio</th>
-                    <th>Subtotal</th>
-                    <th>Código Producto</th>
-                    <th>Código Venta</th>
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody id="tablaDetalles"></tbody>
-            <tr th:each="d : ${detalles}">
-                <td th:text="${d.codigo_detalle_venta}"></td>
-                <td th:text="${d.cantidad}"></td>
-                <td th:text="${d.precio_unitario}"></td>
-                <td th:text="${d.subtotal}"></td>
-                <td th:text="${d.productos_codigo_producto}"></td>
-                <td th:text="${d.ventas_codigo_venta}"></td>
-                <td>
-                    <a th:href="@{'/eliminarDetalle/' + ${d.codigo_detalle_venta}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este detalle?');">
-                        <button class="btn-delete">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </a>
-                </td>
-            </tr>
-        </table>
+    <form class="search" th:action="@{/buscarDetalle}" method="post">
+        <input type="number" name="id" placeholder="Buscar por código" required>
+        <button type="submit" class="btn-search">
+            <i class="bi bi-search"></i>
+        </button>
+    </form>
+
+    <button class="btn-limpiar" onclick="limpiarCampos()">Limpiar</button>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Subtotal</th>
+            <th>Producto</th>
+            <th>Venta</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+
+        <tr th:each="d : ${detalles}">
+            <td th:text="${d.codigo_detalle_venta}"></td>
+            <td th:text="${d.cantidad}"></td>
+            <td th:text="${d.precio_unitario}"></td>
+            <td th:text="${d.subtotal}"></td>
+            <td th:text="${d.productos_codigo_producto}"></td>
+            <td th:text="${d.ventas_codigo_venta}"></td>
+
+            <td>
+                <a th:href="@{'/eliminarDetalle/' + ${d.codigo_detalle_venta}}"
+                   onclick="return confirm('¿Eliminar este detalle?');">
+                    <button class="btn-delete">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </a>
+
+                <button class="btn-edit"
+                        th:data-codigo="${d.codigo_detalle_venta}"
+                        th:data-cantidad="${d.cantidad}"
+                        th:data-precio="${d.precio_unitario}"
+                        th:data-subtotal="${d.subtotal}"
+                        th:data-producto="${d.productos_codigo_producto}"
+                        th:data-venta="${d.ventas_codigo_venta}"
+                        onclick="abrirModalDetalle(this)">
+                    <i class="bi bi-pencil"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div id="modalDetalle" class="modal">
+    <div class="modal-content">
+
+        <h3>Editar Detalle Venta</h3>
+
+        <form th:action="@{/updateDetalle}" method="post">
+            <input type="hidden" id="editCodigo" name="codigo">
+            <input type="text" id="editCantidad" name="cantidad">
+            <input type="text" id="editPrecio" name="precio">
+            <input type="text" id="editSubtotal" name="subtotal">
+            <input type="text" id="editProducto" name="productosCod">
+            <input type="text" id="editVenta" name="ventasCod">
+            <button type="submit">Guardar</button>
+            <button type="button" onclick="cerrarModal()">Cancelar</button>
+        </form>
 
     </div>
+</div>
 
-    <footer>
-        <p>© 2026 Supermarker</p>
-    </footer>
+<script>
+
+    function cerrarModal() {
+        document.getElementById("modalDetalle").style.display = "none";
+    }
+
+    function abrirModalDetalle(btn) {
+
+        document.getElementById("modalDetalle").style.display = "block";
+
+        document.getElementById("editCodigo").value = btn.getAttribute("data-codigo");
+        document.getElementById("editCantidad").value = btn.getAttribute("data-cantidad");
+        document.getElementById("editPrecio").value = btn.getAttribute("data-precio");
+        document.getElementById("editSubtotal").value = btn.getAttribute("data-subtotal");
+        document.getElementById("editProducto").value = btn.getAttribute("data-producto");
+        document.getElementById("editVenta").value = btn.getAttribute("data-venta");
+    }
+
+</script>
+
+<footer>
+    <p>© 2026 Supermarker</p>
+</footer>
 
 </body>
 </html>
