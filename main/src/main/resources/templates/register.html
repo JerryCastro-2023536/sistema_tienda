@@ -14,10 +14,10 @@
     <div class='contenedor'>
         <div class='contenedor-register'>
             <h2>Registro</h2>
-            <form class='form-register' th:action="@{/registro}" method='post'>
+            <form class='form-register' th:action="@{/registro}" method='post' enctype="multipart/form-data">
                 <input type='text' name='username' placeholder='Username' required>
                 <input type='email' name='email' placeholder='Email' >
-                <input type="file" name="profilePicture" accept="image/*">
+                <input type="file" name="archivo" accept="image/*" required>
                 <input type='password' name='password' placeholder='Password' required>
                 <input type='password' name='confirmPassword' placeholder='Confirm Password' >
                 <button type='submit'>Registrar</button>
