@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <link rel='stylesheet' href='login.css'>
 </head>
-<body>0
+<body>
     <div class="contenedor">
         <div class="contenedor-login">
             <img src="Logo.png" alt="logo tienda">
@@ -20,7 +20,9 @@
                 <input type="password" name="password" placeholder="password" required>
                 <button type="submit"><i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión</button>
                 <p>No tienes cuenta? <a href='register'>registrate aquí</a></p>
-
+                <div th:if="${error}" style="color: red;">
+                    <p th:text="${error}"></p>
+                </div>
             </form>
         </div>
     </div>

@@ -15,6 +15,7 @@ create table Usuarios(
     username varchar(45) not null,
     password varchar(45) not null,
     email varchar(60) not null,
+    foto mediumblob,
     rol varchar(45) not null,
     estado int not null
 );

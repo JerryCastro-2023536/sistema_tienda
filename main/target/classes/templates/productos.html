@@ -28,25 +28,24 @@
     <div class="contenedor-productos">
 
         <h2>Registro de Productos</h2>
-        <div class="formulario">
-            <input type="text" id="idProducto" placeholder="ID Producto">
-            <input type="text" id="nombre" placeholder="Nombre">
-            <input type="text" id="precio" placeholder="Precio">
-            <input type="text" id="stock" placeholder="Stock">
+        <form class="formulario" th:action="@{/saveProduct}" method="post">
+            <input type="text" id="idProducto" name="codigo" placeholder="ID Producto">
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+            <input type="text" id="precio" name="precio" placeholder="Precio">
+            <input type="text" id="stock" name="stock" placeholder="Stock">
             
-            <select id="estado">
+            <select id="estado" name="estado">
                 <option value="">Estado</option>
                 <option value="Activo">Activo</option>
                 <option value="Inactivo">Inactivo</option>
             </select>
 
             <div class="botones">
-                <button>Agregar</button>
+                <button type="submit">Agregar</button>
                 <button>Buscar</button>
-                <button>Eliminar</button>
                 <button onclick="limpiarCampos()">Limpiar</button>
             </div>
-        </div>
+        </form>
 
         <table>
             <thead>
@@ -67,9 +66,11 @@
                     <td th:text="${p.stock}"></td>
                     <td th:text="${p.estado}"></td>
                     <td>
-                        <button class="btn-delete">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                        <a th:href="@{'/eliminarProduct/' + ${p.codigo_producto}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                            <button class="btn-delete">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </a>
                     </td>
                 </tr>
             </tbody>
