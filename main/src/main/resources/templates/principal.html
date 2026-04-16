@@ -14,12 +14,36 @@
     <header>
         <nav class="navbar">
             <img src="Logo.png" alt="logo pagina">
-            <ul>
+            <ul th:if="${usuario != null}">
+                <li th:if="${usuario != null}">
+                    <div class="perfil">
+                        <img class="foto"
+                            th:if="${usuario.foto != null}"
+                            th:src="@{'/usuarios/foto/' + ${usuario.codigo_usuario}}"
+                            alt="Perfil">
+
+                        <img class="foto"
+                            th:if="${usuario.foto == null and usuario.rol == 'ADMIN'}"
+                            th:src="@{/admin_default.png}"
+                            alt="Perfil Admin">
+
+                        <img class="foto"
+                            th:if="${usuario.foto != null and usuario.rol == 'ADMIN'}"
+                            th:src="@{'/usuarios/foto/' + ${usuario.codigo_usuario}}"
+                            alt="Perfil Admin">
+
+                        <img class="foto"
+                            th:if="${usuario.foto == null and usuario.rol == 'USER'}"
+                            th:src="@{/user_default.png}"
+                            alt="Perfil Usuario">
+                        <span class="nombre" th:text="${usuario.username}">Nombre</span>
+                    </div>
+                </li>
                 <a href="principal"><li>Inicio</li></a>
-                <a href="#"><li>Productos</li></a>
+                <a href="catalogo"><li>Productos</li></a>
                 <a href="#"><li>Contacto</li></a>
-                <a href="#"><li>Comprar</li></a>
-                <a href="sistema"><li>Administrar</li></a>
+                <a href="catalogo"><li>Comprar</li></a>
+                <a href="sistema" th:if="${usuario.rol == 'ADMIN'}"><li>Administrar</li></a>
                 <a href="acceder"><button>Cerrar Sesión</button></a>
             </ul>
         </nav>
@@ -38,30 +62,19 @@
 
         <section class="productos">
             <h2>Nuestros Productos</h2>
-
             <div class="cards">
-
-                <div class="card">
-                    <i class="bi bi-fork-knife"></i>
-                    <h3>Arroz</h3>
-                    <p>Q12.00</p>
+                <div class="card" th:each="p, iterStat : ${productos}" th:if="${iterStat.index < 3}">
+                    <i class="bi bi-box-seam" style="font-size: 2rem; color: #5C8001;"></i>
+                    <h3 th:text="${p.nombre_producto}">Nombre</h3>
+                    <p th:text="'Q' + ${p.precio}">Q0.00</p>
                     <button>Comprar</button>
                 </div>
-
-                <div class="card">
-                    <i class="bi bi-fork-knife"></i>
-                    <h3>Leche</h3>
-                    <p>Q8.50</p>
-                    <button>Comprar</button>
-                </div>
-
-                <div class="card">
-                    <i class="bi bi-fork-knife"></i>
-                    <h3>Pan</h3>
-                    <p>Q5.00</p>
-                    <button>Comprar</button>
-                </div>
-
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <a href="/catalogo" class="btn-limpiar" style="padding: 12px 25px; text-decoration: none; display: inline-block;">
+                    Ver más productos <i class="bi bi-arrow-right"></i>
+                </a>
             </div>
         </section>
 
