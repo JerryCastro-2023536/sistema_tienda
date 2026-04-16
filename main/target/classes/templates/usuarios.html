@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='en' xmlns:th="http://thymeleaf.org">
+<html lang='es' xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -26,60 +26,124 @@
     </header>
 
     <div class="contenedor-productos">
+        <h2>Gestión de Usuarios</h2>
 
-        <h2>Registro de Usuarios</h2>
         <div class="formulario">
-            <input type="text" id="codigoUsuario" placeholder="Código Usuario">
-            <input type="text" id="username" placeholder="Nombre de Usuario">
-            <input type="text" id="email" placeholder="Email">
-            <input type="text" id="password" placeholder="Contraseña">
+            <form th:action="@{/saveUsuario}" method="post">
+                <input type="text" name="username" placeholder="Nombre de Usuario" required>
+                <input type="email" name="email" placeholder="Correo Electrónico" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <select name="estado">
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
 
-            <select id="estado">
-                <option value="">Estado</option>
-                <option value="Activo">Activo</option>
-                <option value="Inactivo">Inactivo</option>
-            </select>
+                <div class="botones">
+                    <button type="submit" class="btn-guardar-modal">Agregar</button>
 
-            <div class="botones">
-                <button>Agregar</button>
-                <button>Buscar</button>
-                <button>Eliminar</button>
-                <button>Limpiar</button>
-            </div>
+                </div>
+            </form>
+
+            <form th:action="@{/buscarUsuario}" method="post">
+                <input type="number" name="id" placeholder="ID de Usuario" required>
+                <button type="submit" class="btn-search" id="btn-buscar">
+                    <i class="bi bi-search"></i>
+                </button>
+            </form>
+            <button type="button" class="btn-limpiar" onclick="limpiarForm()">Limpiar</button>
         </div>
 
         <table>
             <thead>
                 <tr>
-                    <th>Código Usuario</th>
-                    <th>Nombre de Usuario</th>
+                    <th>ID</th>
+                    <th>Usuario</th>
                     <th>Email</th>
                     <th>Estado</th>
-                    <th>Acción</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody id="tablaUsuarios">
+            <tbody>
                 <tr th:each="u : ${usuarios}">
-                    <td th:text="${ u.codigo_usuario }"></td>
-                    <td th:text="${ u.username }"></td>
-                    <td th:text="${ u.email }"></td>
-                    <td th:text="${ u.estado }"></td>
+                    <td th:text="${u.codigo_usuario}"></td>
+                    <td th:text="${u.username}"></td>
+                    <td th:text="${u.email}"></td>
+                    <td th:text="${u.estado}"></td>
                     <td>
-                        <a th:href="@{'/eliminar/' + ${u.codigo_usuario}}" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
-                            <button class="btn-delete">
-                                <i class="bi bi-trash"></i>
-                            </button>
+                        <a th:href="@{'/eliminar/' + ${u.codigo_usuario}}" onclick="return confirm('¿Eliminar usuario?');">
+                            <button class="btn-delete"><i class="bi bi-trash"></i></button>
                         </a>
+                        <button class="btn-edit"
+                                th:data-codigo="${u.codigo_usuario}"
+                                th:data-username="${u.username}"
+                                th:data-email="${u.email}"
+                                th:data-estado="${u.estado}"
+                                onclick="abrirModalUsuario(this)">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        
                     </td>
                 </tr>
             </tbody>
         </table>
-
     </div>
+
+    <div id="modalUsuario" class="modal">
+        <div class="modal-content">
+            <h3><i class="bi bi-person-gear"></i> Editar Usuario</h3>
+            <form th:action="@{/updateUsuario}" method="post">
+                <input type="hidden" id="editCodigo" name="codigo">
+
+                <label>Nombre de Usuario:</label>
+                <input type="text" id="editUsername" name="username" required>
+
+                <label>Email:</label>
+                <input type="email" id="editEmail" name="email" required>
+
+                <label>Estado:</label>
+                <select id="editEstado" name="estado">
+                    <option value="Activo">Activo</option>
+                    <option value="Inactivo">Inactivo</option>
+                </select>
+
+                <div class="modal-botones">
+                    <button type="submit" class="btn-guardar-modal">Guardar Cambios</button>
+                    <button type="button" class="btn-cancelar-modal" onclick="cerrarModal()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function abrirModalUsuario(btn) {
+            document.getElementById("modalUsuario").style.display = "block";
+
+            document.getElementById("editCodigo").value = btn.getAttribute("data-codigo");
+            document.getElementById("editUsername").value = btn.getAttribute("data-username");
+            document.getElementById("editEmail").value = btn.getAttribute("data-email");
+            
+            let estado = btn.getAttribute("data-estado");
+            document.getElementById("editEstado").value = (estado == "1") ? "Activo" : "Inactivo";
+        }
+
+        function cerrarModal() {
+            document.getElementById("modalUsuario").style.display = "none";
+        }
+
+        function limpiarForm() {
+            window.location.href = "/usuarios";
+        }
+
+        window.onclick = function(event) {
+            let modal = document.getElementById("modalUsuario");
+            if (event.target == modal) {
+                cerrarModal();
+            }
+        }
+    </script>
 
     <footer>
         <p>© 2026 Supermarker</p>
     </footer>
-
 </body>
 </html>

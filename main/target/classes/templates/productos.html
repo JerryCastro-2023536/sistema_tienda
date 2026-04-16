@@ -20,7 +20,7 @@
                 <a href="#"><li>Productos</li></a>
                 <a href="#"><li>Contacto</li></a>
                 <a href="#"><li>Comprar</li></a>
-                <a href="sistema"><li>Administrar</li></a>
+                <a href="sistema"><button>Volver al menu</button></a>
             </ul>
         </nav>
     </header>
@@ -91,21 +91,30 @@
         </table>
         <div id="modalEditar" class="modal">
             <div class="modal-content">
-                <h3>Editar Producto</h3>
+                <h3><i class="bi bi-pencil-square"></i> Editar Producto</h3>
 
                 <form th:action="@{/updateProduct}" method="post">
                     <input type="hidden" id="editId" name="codigo">
-                    <input type="text" id="editNombre" name="nombre">
-                    <input type="text" id="editPrecio" name="precio">
-                    <input type="text" id="editStock" name="stock">
+                    
+                    <label style="display:block; text-align:left; font-size:14px;">Nombre del Producto:</label>
+                    <input type="text" id="editNombre" name="nombre" placeholder="Nombre" required>
+                    
+                    <label style="display:block; text-align:left; font-size:14px;">Precio:</label>
+                    <input type="text" id="editPrecio" name="precio" placeholder="Precio" required>
+                    
+                    <label style="display:block; text-align:left; font-size:14px;">Stock:</label>
+                    <input type="text" id="editStock" name="stock" placeholder="Stock" required>
 
+                    <label style="display:block; text-align:left; font-size:14px;">Estado:</label>
                     <select id="editEstado" name="estado">
                         <option value="Activo">Activo</option>
                         <option value="Inactivo">Inactivo</option>
                     </select>
 
-                    <button type="submit">Guardar</button>
-                    <button type="button" onclick="cerrarModal()">Cancelar</button>
+                    <div class="modal-botones">
+                        <button type="submit" class="btn-guardar">Actualizar</button>
+                        <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -131,7 +140,16 @@
             document.getElementById("editNombre").value = nombre;
             document.getElementById("editPrecio").value = precio;
             document.getElementById("editStock").value = stock;
-            document.getElementById("editEstado").value = (estado == 1) ? "Activo" : "Inactivo";
+            
+            document.getElementById("editEstado").value = (estado == "1" || estado == "Activo") ? "Activo" : "Inactivo";
+        }
+
+       
+        window.onclick = function(event) {
+            let modal = document.getElementById("modalEditar");
+            if (event.target == modal) {
+                cerrarModal();
+            }
         }
     </script>
 

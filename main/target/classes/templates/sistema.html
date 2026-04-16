@@ -18,7 +18,25 @@
             <ul>
                 <li th:if="${usuario != null}">
                     <div class="perfil">
-                        <img class="foto" th:src="@{'/usuarios/foto/' + ${usuario.codigo_usuario}}" alt="Perfil">
+                        <img class="foto"
+                             th:if="${usuario.foto != null}"
+                             th:src="@{'/usuarios/foto/' + ${usuario.codigo_usuario}}"
+                             alt="Perfil">
+
+                        <img class="foto"
+                             th:if="${usuario.foto == null and usuario.rol == 'ADMIN'}"
+                             th:src="@{/admin_default.png}"
+                             alt="Perfil Admin">
+                        
+                        <img class="foto"
+                            th:if="${usuario.foto != null and usuario.rol == 'ADMIN'}"
+                            th:src="@{'/usuarios/foto/' + ${usuario.codigo_usuario}}"
+                            alt="Perfil Admin">
+
+                        <img class="foto"
+                             th:if="${usuario.foto == null and usuario.rol == 'USER'}"
+                             th:src="@{/user_default.png}"
+                             alt="Perfil Usuario">
                         <span class="nombre" th:text="${usuario.username}">Nombre</span>
                     </div>
                 </li>
