@@ -16,13 +16,29 @@
         <nav class="navbar">
             <img src="Logo.png" alt="logo pagina">
             <ul>
-                <li th:if="${usuario != null}" style="display: flex; align-items: center; gap: 10px; list-style: none;">
-                    <div style="width: 45px; height: 45px; border-radius: 50%; overflow: hidden; border: 2px solid white; display: flex; justify-content: center; align-items: center; flex-shrink: 0;">
-                        <img th:src="@{'/usuarios/foto/' + ${usuario.codigo_usuario}}"
-                             alt="Perfil"
-                             style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;">
+                <li th:if="${usuario != null}">
+                    <div class="perfil">
+                        <img class="foto"
+                             th:if="${usuario.foto != null}"
+                             th:src="@{'/usuarios/foto/' + ${usuario.codigo_usuario}}"
+                             alt="Perfil">
+
+                        <img class="foto"
+                             th:if="${usuario.foto == null and usuario.rol == 'ADMIN'}"
+                             th:src="@{/admin_default.png}"
+                             alt="Perfil Admin">
+                        
+                        <img class="foto"
+                            th:if="${usuario.foto != null and usuario.rol == 'ADMIN'}"
+                            th:src="@{'/usuarios/foto/' + ${usuario.codigo_usuario}}"
+                            alt="Perfil Admin">
+
+                        <img class="foto"
+                             th:if="${usuario.foto == null and usuario.rol == 'USER'}"
+                             th:src="@{/user_default.png}"
+                             alt="Perfil Usuario">
+                        <span class="nombre" th:text="${usuario.username}">Nombre</span>
                     </div>
-                    <span style="color: white; font-weight: bold; font-size: 0.9rem;" th:text="${usuario.username}">Nombre</span>
                 </li>
                 <a href="principal"><li>Inicio</li></a>
                 <a href="#"><li>Productos</li></a>
