@@ -49,7 +49,7 @@ public class LoginController {
 
         if (u != null) {
             session.setAttribute("usuarioLogueado", u);
-            return "redirect:/sistema";
+            return "redirect:/principal";
         } else {
             model.addAttribute("error", "Credenciales incorrectas");
             return "login";
@@ -81,11 +81,52 @@ public class LoginController {
         return "redirect:/acceder";
     }
 
-    // LISTA
+    // --- CONTROLADOR DE USUARIOS ---
     @GetMapping("/usuarios")
     public String listarUsuario(Model model) {
         List<Usuarios> lista = usuariosService.getAllUsuarios();
         model.addAttribute("usuarios", lista);
+        return "usuarios";
+    }
+
+
+    @PostMapping("/saveUsuario")
+    public String saveUsuario(@RequestParam("username") String username,
+                              @RequestParam("email") String email,
+                              @RequestParam("password") String password,
+                              @RequestParam("estado") String estado) {
+        Usuarios u = new Usuarios();
+        u.setUsername(username);
+        u.setEmail(email);
+        u.setPassword(password);
+        u.setEstado(estado.equals("Activo") ? 1 : 0);
+
+        usuariosService.saveUsuarios(u);
+        return "redirect:/usuarios";
+    }
+
+    @PostMapping("/updateUsuario")
+    public String updateUsuario(@RequestParam("codigo") Integer codigo,
+                                @RequestParam("username") String username,
+                                @RequestParam("password") String password,
+                                @RequestParam("email") String email,
+                                @RequestParam("estado") String estado) {
+        Usuarios u = usuariosService.getByIdUsuarios(codigo);
+        u.setUsername(username);
+        u.setPassword(password);
+        u.setEmail(email);
+        u.setEstado(estado.equals("Activo") ? 1 : 0);
+
+        usuariosService.updateUsuarios(codigo, u);
+        return "redirect:/usuarios";
+    }
+
+    @PostMapping("/buscarUsuario")
+    public String buscarUsuario(@RequestParam("id") Integer id, Model model) {
+
+        Usuarios u = usuariosService.getByIdUsuarios(id);
+        model.addAttribute("usuarios", List.of(u));
+
         return "usuarios";
     }
 
